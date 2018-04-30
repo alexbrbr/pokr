@@ -5,7 +5,18 @@ module.exports = {
   hasThreeOfAKind,
   hasAtLeastAPair,
   hasFullHouse,
-  hasStraight
+  hasStraight,
+  hasFlush,
+  hasStraightFlush
+}
+
+function hasStraightFlush(cards) {
+  return hasFlush(cards) && hasStraight(cards);
+}
+
+function hasFlush(cards) {
+  const cardSuits = cards.map(c => c[1]);
+  return suits.some(suit => cardSuits.filter(cardSuit => cardSuit === suit).length >= 5);
 }
 
 function hasFourOfAKind(cards) {

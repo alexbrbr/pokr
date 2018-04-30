@@ -1,5 +1,5 @@
 const {createDeck, pickRandomCard, dealHand, dealSeven} = require('./index');
-const {hasFourOfAKind, hasThreeOfAKind, hasAtLeastAPair, hasFullHouse, hasStraight} = require('./hands');
+const {hasFourOfAKind, hasThreeOfAKind, hasAtLeastAPair, hasFullHouse, hasStraight, hasFlush, hasStraightFlush} = require('./hands');
 
 test('hasFourOfAKind should return true when 4 cards with same value are passed', () => {
   expect(hasFourOfAKind([
@@ -142,5 +142,77 @@ test('hasStraight should return false when no 5 cards in order are passed', () =
     'As',
     '5s',
     'Qs'
+  ])).toBe(false)
+})
+
+test('hasFlush should return true when 5 or more cards of the same suit are passed', () => {
+  expect(hasFlush([
+    '2s',
+    '7s',
+    '8s',
+    'Th',
+    'As',
+    '5s',
+    'Qs'
+  ])).toBe(true)
+})
+
+test('hasFlush should return false when 4 or less cards of the same suit are passed', () => {
+  expect(hasFlush([
+    '2s',
+    '7d',
+    '8d',
+    'Th',
+    'As',
+    '5s',
+    'Qs'
+  ])).toBe(false)
+})
+
+test('hasStraightFlush should return true when cards are straight and flush', () => {
+  expect(hasStraightFlush([
+    '2s',
+    '7d',
+    '8d',
+    '9d',
+    'Td',
+    'Jd',
+    'Qs'
+  ])).toBe(true)
+})
+
+test('hasStraightFlush should return false when cards are straight and but not flush', () => {
+  expect(hasStraightFlush([
+    '2s',
+    '7d',
+    '8h',
+    '9d',
+    'Td',
+    'Jd',
+    'Qs'
+  ])).toBe(false)
+})
+
+test('hasStraightFlush should return false when cards are flush and but not straight', () => {
+  expect(hasStraightFlush([
+    '2s',
+    '7d',
+    '3d',
+    '9d',
+    'Td',
+    'Jd',
+    'Qs'
+  ])).toBe(false)
+})
+
+test('hasStraightFlush should return false when cards are neither flush nor straight', () => {
+  expect(hasStraightFlush([
+    '2s',
+    '7d',
+    '3s',
+    '9d',
+    'Ts',
+    'Jd',
+    'As'
   ])).toBe(false)
 })
