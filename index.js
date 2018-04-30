@@ -1,20 +1,20 @@
 const ranks = [
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "T",
-  "J",
-  "Q",
-  "K",
-  "A"
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  'T',
+  'J',
+  'Q',
+  'K',
+  'A'
 ];
 
-const suits = ["c", "s", "h", "d"];
+const suits = ['c', 's', 'h', 'd'];
 
 function createDeck() {
   return ranks
@@ -50,9 +50,9 @@ function dealHand(deck) {
 }
 
 function dealSeven(deck) {
-  //simulate hand + 5 on table
+  // simulate hand + 5 on table
   const cards = [];
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < 7; i += 1) {
     cards.push(
       deck.splice(
         Math.floor(Math.random() * deck.length),
