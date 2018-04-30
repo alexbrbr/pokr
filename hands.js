@@ -1,4 +1,4 @@
-const {colors, values, dealSeven, createDeck} = require("./index")
+const {suits, ranks, dealSeven, createDeck} = require("./index")
 
 module.exports = {
   hasFourOfAKind,
@@ -49,25 +49,25 @@ function hasFullHouse(cards) {
 }
 
 function hasStraight(cards) {
-  const straightOrderAceFirst = ['A', ...values.slice(0, -1)]
-  const straightOrderAceLast = [...values]
+  const straightOrderAceFirst = ['A', ...ranks.slice(0, -1)]
+  const straightOrderAceLast = [...ranks]
   return isOrderedSubset(straightOrderAceFirst, cards) || isOrderedSubset(straightOrderAceLast, cards)
 }
 
 const uniqueElements = arr => [...new Set(arr)]
 function isOrderedSubset(straightOrder, cards) {
-  const sortedUniqValues = uniqueElements(cards
+  const sortedUniqRanks = uniqueElements(cards
     .map(c => c[0])
     .sort((a, b) => straightOrder.indexOf(a) - straightOrder.indexOf(b)));
-  if (sortedUniqValues.length < 5) return false
+  if (sortedUniqRanks.length < 5) return false
   for (let i = 0; i < straightOrder.length; i += 1) {
-    if (straightOrder[i] === sortedUniqValues[0] && straightOrder[i + 4] === sortedUniqValues[4]) {
+    if (straightOrder[i] === sortedUniqRanks[0] && straightOrder[i + 4] === sortedUniqRanks[4]) {
       return true
     }
-    if (straightOrder[i] === sortedUniqValues[1] && straightOrder[i + 4] === sortedUniqValues[5]) {
+    if (straightOrder[i] === sortedUniqRanks[1] && straightOrder[i + 4] === sortedUniqRanks[5]) {
       return true
     }
-    if (straightOrder[i] === sortedUniqValues[2] && straightOrder[i + 4] === sortedUniqValues[6]) {
+    if (straightOrder[i] === sortedUniqRanks[2] && straightOrder[i + 4] === sortedUniqRanks[6]) {
       return true
     }
   }

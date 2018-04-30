@@ -1,4 +1,4 @@
-const values = [
+const ranks = [
   '2',
   '3',
   '4',
@@ -14,7 +14,7 @@ const values = [
   'A'
 ]
 
-const colors = [
+const suits = [
   'c',
   's',
   'h',
@@ -22,8 +22,8 @@ const colors = [
 ]
 
 function createDeck() {
-  return values
-    .map(v => colors.map(c => `${v}${c}`))
+  return ranks
+    .map(rank => suits.map(suit => `${rank}${suit}`))
     .reduce((acc, val) => acc.concat(val), [])
 }
 
@@ -62,6 +62,6 @@ module.exports = {
   pickRandomCard,
   dealHand,
   dealSeven,
-  values,
-  colors
+  ranks,
+  suits
 }
