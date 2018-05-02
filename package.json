@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest",
     "test-watch": "jest --watch",
+    "test-coverage": "jest --coverage",
     "lint": "eslint *.js --fix",
     "prettier": "prettier \"*.js\" --write --print-width 60"
   },
@@ -20,6 +21,7 @@
   },
   "homepage": "https://github.com/alexbrbr/pokr#readme",
   "devDependencies": {
+    "coveralls": "^3.0.1",
     "eslint": "^4.19.1",
     "eslint-config-sparkle": "0.0.1",
     "jest": "^22.4.3",
