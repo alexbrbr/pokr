@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/alexbrbr/pokr#readme",
   "devDependencies": {
+    "coveralls": "^3.0.1",
     "eslint": "^4.19.1",
     "eslint-config-sparkle": "0.0.1",
     "jest": "^22.4.3",
