@@ -1,4 +1,4 @@
-const {suits, ranks} = require('./index');
+const { suits, ranks } = require("../index");
 
 module.exports = {
   hasFourOfAKind,
@@ -17,9 +17,7 @@ function hasStraightFlush(cards) {
 function hasFlush(cards) {
   const cardSuits = cards.map(c => c[1]);
   return suits.some(
-    suit =>
-      cardSuits.filter(cardSuit => cardSuit === suit)
-        .length >= 5
+    suit => cardSuits.filter(cardSuit => cardSuit === suit).length >= 5
   );
 }
 
@@ -64,10 +62,7 @@ function hasFullHouse(cards) {
 }
 
 function hasStraight(cards) {
-  const straightOrderAceFirst = [
-    'A',
-    ...ranks.slice(0, -1)
-  ];
+  const straightOrderAceFirst = ["A", ...ranks.slice(0, -1)];
   const straightOrderAceLast = [...ranks];
   return (
     isOrderedSubset(straightOrderAceFirst, cards) ||
@@ -84,11 +79,7 @@ function isOrderedSubset(straightOrder, cards) {
   const sortedUniqRanks = uniqueElements(
     cards
       .map(c => c[0])
-      .sort(
-        (a, b) =>
-          straightOrder.indexOf(a) -
-          straightOrder.indexOf(b)
-      )
+      .sort((a, b) => straightOrder.indexOf(a) - straightOrder.indexOf(b))
   );
   if (sortedUniqRanks.length < 5) {
     return false;
@@ -103,11 +94,11 @@ function isOrderedSubset(straightOrder, cards) {
 
 function hasSequence(straightOrder, sortedUniqRanks, i) {
   const has5orderedCards =
-    straightOrder[i] === sortedUniqRanks[0] &&
-      straightOrder[i + 4] === sortedUniqRanks[4] ||
-    straightOrder[i] === sortedUniqRanks[1] &&
-      straightOrder[i + 4] === sortedUniqRanks[5] ||
-    straightOrder[i] === sortedUniqRanks[2] &&
-      straightOrder[i + 4] === sortedUniqRanks[6];
+    (straightOrder[i] === sortedUniqRanks[0] &&
+      straightOrder[i + 4] === sortedUniqRanks[4]) ||
+    (straightOrder[i] === sortedUniqRanks[1] &&
+      straightOrder[i + 4] === sortedUniqRanks[5]) ||
+    (straightOrder[i] === sortedUniqRanks[2] &&
+      straightOrder[i + 4] === sortedUniqRanks[6]);
   return has5orderedCards;
 }
