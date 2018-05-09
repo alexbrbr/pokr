@@ -1,7 +1,8 @@
 const { suits, ranks } = require("../index");
 
 module.exports = {
-  findFlush
+  findFlush,
+  find5Highest
 };
 
 function findFlush(cards) {
@@ -12,10 +13,15 @@ function findFlush(cards) {
   if (!flushSuit) {
     return null;
   }
+  return find5Highest(cards.filter(card => card[1] === flushSuit));
+}
+
+function find5Highest(cards) {
+  return findHighest(5, cards);
+}
+
+function findHighest(numberToPick, cards) {
   return cards
-    .filter(card => card[1] === flushSuit)
-    .map(c => c[0])
-    .sort((a, b) => ranks.indexOf(b) - ranks.indexOf(a))
-    .slice(0, 5)
-    .map(c => `${c}${flushSuit}`);
+    .sort((a, b) => ranks.indexOf(b[0]) - ranks.indexOf(a[0]))
+    .slice(0, numberToPick);
 }
