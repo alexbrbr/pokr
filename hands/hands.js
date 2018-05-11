@@ -1,4 +1,4 @@
-const { suits, ranks } = require("../index");
+const {suits, ranks} = require('../index');
 
 module.exports = {
   hasFourOfAKind,
@@ -62,7 +62,7 @@ function hasFullHouse(cards) {
 }
 
 function hasStraight(cards) {
-  const straightOrderAceFirst = ["A", ...ranks.slice(0, -1)];
+  const straightOrderAceFirst = ['A', ...ranks.slice(0, -1)];
   const straightOrderAceLast = [...ranks];
   return (
     isOrderedSubset(straightOrderAceFirst, cards) ||
@@ -94,11 +94,11 @@ function isOrderedSubset(straightOrder, cards) {
 
 function hasSequence(straightOrder, sortedUniqRanks, i) {
   const has5orderedCards =
-    (straightOrder[i] === sortedUniqRanks[0] &&
-      straightOrder[i + 4] === sortedUniqRanks[4]) ||
-    (straightOrder[i] === sortedUniqRanks[1] &&
-      straightOrder[i + 4] === sortedUniqRanks[5]) ||
-    (straightOrder[i] === sortedUniqRanks[2] &&
-      straightOrder[i + 4] === sortedUniqRanks[6]);
+    straightOrder[i] === sortedUniqRanks[0] &&
+      straightOrder[i + 4] === sortedUniqRanks[4] ||
+    straightOrder[i] === sortedUniqRanks[1] &&
+      straightOrder[i + 4] === sortedUniqRanks[5] ||
+    straightOrder[i] === sortedUniqRanks[2] &&
+      straightOrder[i + 4] === sortedUniqRanks[6];
   return has5orderedCards;
 }

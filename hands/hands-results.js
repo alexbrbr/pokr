@@ -1,8 +1,9 @@
-const { suits, ranks } = require("../index");
+const {suits, ranks} = require('../index');
 
 module.exports = {
   findFlush,
-  find5Highest
+  find5Highest,
+  findFourOfAKind
 };
 
 function findFlush(cards) {
@@ -14,6 +15,28 @@ function findFlush(cards) {
     return null;
   }
   return find5Highest(cards.filter(card => card[1] === flushSuit));
+}
+
+function findFourOfAKind(cards) {
+  const cardsRank = cards.map(c => c[0]);
+  const rankCounts = {};
+
+  for (let i = 0; i < cardsRank.length; i += 1) {
+    const rank = cardsRank[i];
+    rankCounts[rank] = rankCounts[rank] ? rankCounts[rank] + 1 : 1;
+  }
+
+  const fourOfAkindValue = Object
+    .entries(rankCounts)
+    .find(r => r[1] === 4);
+  if (!fourOfAkindValue) {
+    return null;
+  }
+
+  return [
+    ...cards.filter(c => c[0] === fourOfAkindValue[0]),
+    ...findHighest(1, cards.filter(c => c[0] !== fourOfAkindValue[0]))
+  ];
 }
 
 function find5Highest(cards) {
