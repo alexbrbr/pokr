@@ -3,7 +3,8 @@ const {suits, ranks} = require('../index');
 module.exports = {
   findFlush,
   find5Highest,
-  findFourOfAKind
+  findFourOfAKind,
+  findThreeOfAKind
 };
 
 function findFlush(cards) {
@@ -18,6 +19,34 @@ function findFlush(cards) {
 }
 
 function findFourOfAKind(cards) {
+  const fourOfAkindValue = findSameKind(4, cards);
+  if (!fourOfAkindValue) {
+    return null;
+  }
+
+  return [
+    ...cards.filter(c => c[0] === fourOfAkindValue),
+    ...findHighest(1, cards.filter(c => c[0] !== fourOfAkindValue))
+  ];
+}
+
+function findThreeOfAKind(cards) {
+  const threeOfAkindValue = findSameKind(3, cards);
+  if (!threeOfAkindValue) {
+    return null;
+  }
+
+  return [
+    ...cards.filter(c => c[0] === threeOfAkindValue),
+    ...findHighest(2, cards.filter(c => c[0] !== threeOfAkindValue))
+  ];
+}
+
+function find5Highest(cards) {
+  return findHighest(5, cards);
+}
+
+function findSameKind(numberByKind, cards) {
   const cardsRank = cards.map(c => c[0]);
   const rankCounts = {};
 
@@ -26,21 +55,14 @@ function findFourOfAKind(cards) {
     rankCounts[rank] = rankCounts[rank] ? rankCounts[rank] + 1 : 1;
   }
 
-  const fourOfAkindValue = Object
+  const kindValue = Object
     .entries(rankCounts)
-    .find(r => r[1] === 4);
-  if (!fourOfAkindValue) {
+    .find(r => r[1] === numberByKind);
+  if (!kindValue) {
     return null;
   }
 
-  return [
-    ...cards.filter(c => c[0] === fourOfAkindValue[0]),
-    ...findHighest(1, cards.filter(c => c[0] !== fourOfAkindValue[0]))
-  ];
-}
-
-function find5Highest(cards) {
-  return findHighest(5, cards);
+  return kindValue[0];
 }
 
 function findHighest(numberToPick, cards) {
