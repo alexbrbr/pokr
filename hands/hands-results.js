@@ -6,7 +6,8 @@ module.exports = {
   findFourOfAKind,
   findThreeOfAKind,
   findFull,
-  findDoublePair
+  findDoublePair,
+  findStraight
 };
 
 function findFlush(cards) {
@@ -81,6 +82,11 @@ function find5Highest(cards) {
   return findHighest(5, cards);
 }
 
+function findStraight(cards) {
+  return findOrderedSubset(cards);
+}
+// internal functions
+
 function findSameKind(numberByKind, cards) {
   const cardsRank = cards.map(c => c[0]);
   const rankCounts = {};
@@ -104,4 +110,39 @@ function findHighest(numberToPick, cards) {
   return cards
     .sort((a, b) => ranks.indexOf(b[0]) - ranks.indexOf(a[0]))
     .slice(0, numberToPick);
+}
+
+function uniqueElements(arr) {
+  return [...new Set(arr)];
+}
+
+function findOrderedSubset(cards) {
+  const straightOrder = ['A', ...ranks].reverse();
+
+  const sortedUniqRanks = uniqueElements(
+    cards
+      .sort((a, b) => straightOrder.indexOf(a[0]) - straightOrder.indexOf(b[0]))
+  );
+  for (let i = 0; i < straightOrder.length - 4; i += 1) {
+    const sequence = findSequence(straightOrder, sortedUniqRanks, i)
+    if (sequence) {
+      return sequence;
+    }
+  }
+  return null;
+}
+
+function findSequence(straightOrder, sortedUniqCards, i) {
+  return findSequenceBeginning(0, sortedUniqCards, straightOrder, i) ||
+    findSequenceBeginning(1, sortedUniqCards, straightOrder, i) ||
+    findSequenceBeginning(2, sortedUniqCards, straightOrder, i) ||
+    null;
+}
+
+function findSequenceBeginning(beginning, sortedUniqCards, straightOrder, i) {
+  if (straightOrder[i] === sortedUniqCards[beginning][0] &&
+      straightOrder[i + 4] === sortedUniqCards[beginning + 4][0]) {
+    return [...sortedUniqCards.slice(beginning, beginning + 5)];
+  }
+  return null;
 }

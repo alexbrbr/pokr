@@ -1,4 +1,4 @@
-const {findFlush, find5Highest, findFourOfAKind, findThreeOfAKind, findFull, findDoublePair} = require('./hands-results');
+const {findFlush, find5Highest, findFourOfAKind, findThreeOfAKind, findFull, findDoublePair, findStraight} = require('./hands-results');
 
 test('findFlush should return the 5 cards composing the flush (same suit)', () => {
   expect(findFlush(['3s', 'As', '5c', 'Ah', '2s', 'Ts', '4s'])).toEqual([
@@ -73,7 +73,7 @@ test('findFull should return null when 3 cards of same rank + a pair are not pre
     .toEqual(null);
 });
 
-test('findFull should return null when 3 cards of same rank are present but no pair', () => {
+test('findFull should return null when 3 cards of same rank are passed but no pair', () => {
   expect(findFull(['Ac', 'As', 'Ad', '2s', 'Ts', '4s', 'Kh']))
     .toEqual(null);
 });
@@ -85,12 +85,12 @@ test('findFull should return 3 cards of same rank plus a pair', () => {
     ]);
 });
 
-test('findDoublePair should return null when no pair are not present', () => {
+test('findDoublePair should return null when no pair are not passed', () => {
   expect(findDoublePair(['Ac', '3s', '5d', '2s', 'Ts', '4s', 'Kh']))
     .toEqual(null);
 });
 
-test('findDoublePair should return null when only 1 pair is present', () => {
+test('findDoublePair should return null when only 1 pair is passed', () => {
   expect(findDoublePair(['Ac', '3s', 'Ad', '2s', 'Ts', '4s', 'Kh']))
     .toEqual(null);
 });
@@ -100,4 +100,24 @@ test('findDoublePair should return two pairs + highest card', () => {
     .toEqual([
       '2s', '2h', 'Ac', 'As', 'Kh'
     ]);
+});
+
+test('findStraight should return null when no straight is passed', () => {
+  expect(findStraight(['Ac', '3s', 'Ad', '2s', 'Ts', '4s', 'Kh']))
+    .toEqual(null);
+});
+
+test('findStraight should return null 4 cards are in order', () => {
+  expect(findStraight(['2s', '7d', 'Tc', '6h', 'As', '5s', '4s']))
+    .toEqual(null);
+});
+
+test('findStraight should return straight', () => {
+  expect(findStraight(['2s', '7d', '8c', '6h', 'As', '5s', '4s']))
+    .toEqual(['8c', '7d', '6h', '5s', '4s']);
+});
+
+test('findStraight should return highest straight when all cards follow', () => {
+  expect(findStraight(['9s', '7d', '8c', '6h', 'Ts', '5s', '4s']))
+    .toEqual(['Ts', '9s', '8c', '7d', '6h']);
 });
