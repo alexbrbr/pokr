@@ -1,4 +1,4 @@
-const {findFlush, find5Highest, findFourOfAKind, findThreeOfAKind} = require('./hands-results');
+const {findFlush, find5Highest, findFourOfAKind, findThreeOfAKind, findFull} = require('./hands-results');
 
 test('findFlush should return the 5 cards composing the flush (same suit)', () => {
   expect(findFlush(['3s', 'As', '5c', 'Ah', '2s', 'Ts', '4s'])).toEqual([
@@ -65,5 +65,17 @@ test('findThreeOfAKind should return 3 cards of same rank plus higher card', () 
   expect(findThreeOfAKind(['Ac', 'As', 'Ad', '2s', '3h', '4s', 'Kh']))
     .toEqual([
       'Ac', 'As', 'Ad', 'Kh', '4s'
+    ]);
+});
+
+test('findFull should return null when 3 cards of same rank + a pair are not present', () => {
+  expect(findFull(['Ac', '3s', 'Ad', '2s', 'Ts', '4s', 'Kh']))
+    .toEqual(null);
+});
+
+test('findFull should return 3 cards of same rank plus a pair', () => {
+  expect(findFull(['Ac', 'As', 'Ad', '2s', '2h', '4s', 'Kh']))
+    .toEqual([
+      'Ac', 'As', 'Ad', '2s', '2h'
     ]);
 });
