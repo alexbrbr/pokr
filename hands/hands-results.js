@@ -5,7 +5,8 @@ module.exports = {
   find5Highest,
   findFourOfAKind,
   findThreeOfAKind,
-  findFull
+  findFull,
+  findDoublePair
 };
 
 function findFlush(cards) {
@@ -56,6 +57,23 @@ function findFull(cards) {
   return [
     ...cards.filter(c => c[0] === threeOfAkindValue),
     ...cards.filter(c => c[0] === pairValue)
+  ];
+}
+
+function findDoublePair(cards) {
+  const firstPair = findSameKind(2, cards);
+  if (!firstPair) {
+    return null;
+  }
+  const secondPair = findSameKind(2, cards.filter(c => c[0] !== firstPair));
+  if (!secondPair) {
+    return null;
+  }
+
+  return [
+    ...cards.filter(c => c[0] === firstPair),
+    ...cards.filter(c => c[0] === secondPair),
+    ...findHighest(1, cards.filter(c => c[0] !== firstPair && c[0] !== secondPair))
   ];
 }
 

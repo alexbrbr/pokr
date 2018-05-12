@@ -1,4 +1,4 @@
-const {findFlush, find5Highest, findFourOfAKind, findThreeOfAKind, findFull} = require('./hands-results');
+const {findFlush, find5Highest, findFourOfAKind, findThreeOfAKind, findFull, findDoublePair} = require('./hands-results');
 
 test('findFlush should return the 5 cards composing the flush (same suit)', () => {
   expect(findFlush(['3s', 'As', '5c', 'Ah', '2s', 'Ts', '4s'])).toEqual([
@@ -73,9 +73,31 @@ test('findFull should return null when 3 cards of same rank + a pair are not pre
     .toEqual(null);
 });
 
+test('findFull should return null when 3 cards of same rank are present but no pair', () => {
+  expect(findFull(['Ac', 'As', 'Ad', '2s', 'Ts', '4s', 'Kh']))
+    .toEqual(null);
+});
+
 test('findFull should return 3 cards of same rank plus a pair', () => {
   expect(findFull(['Ac', 'As', 'Ad', '2s', '2h', '4s', 'Kh']))
     .toEqual([
       'Ac', 'As', 'Ad', '2s', '2h'
+    ]);
+});
+
+test('findDoublePair should return null when no pair are not present', () => {
+  expect(findDoublePair(['Ac', '3s', '5d', '2s', 'Ts', '4s', 'Kh']))
+    .toEqual(null);
+});
+
+test('findDoublePair should return null when only 1 pair is present', () => {
+  expect(findDoublePair(['Ac', '3s', 'Ad', '2s', 'Ts', '4s', 'Kh']))
+    .toEqual(null);
+});
+
+test('findDoublePair should return two pairs + highest card', () => {
+  expect(findDoublePair(['Ac', 'As', '3d', '2s', '2h', '4s', 'Kh']))
+    .toEqual([
+      '2s', '2h', 'Ac', 'As', 'Kh'
     ]);
 });
