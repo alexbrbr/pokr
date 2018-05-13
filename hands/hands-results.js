@@ -9,8 +9,31 @@ module.exports = {
   findDoublePair,
   findStraight,
   findPair,
-  findStraightFlush
+  findStraightFlush,
+  findBestHand
 };
+
+function findBestHand(cards) { // eslint-disable-line consistent-return
+  const handFinders = {
+    straightFlush: findStraightFlush,
+    fourOfAKind: findFourOfAKind,
+    fullHouse: findFull,
+    flush: findFlush,
+    threeOfAKind: findThreeOfAKind,
+    twoPair: findDoublePair,
+    pair: findPair,
+    highCard: find5Highest
+  }
+  for (const handName in handFinders) {
+    const cardsForHand = handFinders[handName](cards);
+    if (cardsForHand) {
+      return {
+        cards: cardsForHand,
+        hand: handName
+      }
+    }
+  }
+}
 
 function findStraightFlush(cards) {
   const cardSuits = cards.map(c => c[1]);
