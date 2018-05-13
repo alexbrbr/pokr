@@ -1,4 +1,4 @@
-const {findFlush, find5Highest, findFourOfAKind, findThreeOfAKind, findFull, findDoublePair, findStraight} = require('./hands-results');
+const {findFlush, find5Highest, findFourOfAKind, findThreeOfAKind, findFull, findDoublePair, findStraight, findPair} = require('./hands-results');
 
 test('findFlush should return the 5 cards composing the flush (same suit)', () => {
   expect(findFlush(['3s', 'As', '5c', 'Ah', '2s', 'Ts', '4s'])).toEqual([
@@ -120,4 +120,14 @@ test('findStraight should return straight', () => {
 test('findStraight should return highest straight when all cards follow', () => {
   expect(findStraight(['9s', '7d', '8c', '6h', 'Ts', '5s', '4s']))
     .toEqual(['Ts', '9s', '8c', '7d', '6h']);
+});
+
+test('findPair should return null when no pair are passed', () => {
+  expect(findPair(['2s', '7d', 'Tc', '6h', 'As', '5s', '4s']))
+    .toEqual(null);
+});
+
+test('findPair should return pair and 3 top cards', () => {
+  expect(findPair(['2s', 'Ad', '8c', '6h', 'As', '5s', '4s']))
+    .toEqual(['Ad', 'As', '8c', '6h', '5s']);
 });
