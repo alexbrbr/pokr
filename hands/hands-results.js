@@ -8,8 +8,20 @@ module.exports = {
   findFull,
   findDoublePair,
   findStraight,
-  findPair
+  findPair,
+  findStraightFlush
 };
+
+function findStraightFlush(cards) {
+  const cardSuits = cards.map(c => c[1]);
+  const flushSuit = suits.find(
+    suit => cardSuits.filter(cardSuit => cardSuit === suit).length >= 5
+  );
+  if (!flushSuit) {
+    return null;
+  }
+  return findStraight(cards.filter(card => card[1] === flushSuit));
+}
 
 function findFlush(cards) {
   const cardSuits = cards.map(c => c[1]);
