@@ -18,23 +18,38 @@ function winningPlayer(player1Cards, player2cards, tablecards) {
   const player1bestHand = findBestHand([...player1Cards, ...tablecards]);
   const player2bestHand = findBestHand([...player2cards, ...tablecards]);
   if (hands.findIndex(h => h === player1bestHand.hand) < hands.findIndex(h => h === player2bestHand.hand)) {
-    return 'player 1 wins';
+    return {
+      winner: 'player1',
+      hand: player1bestHand
+    };
   } else if (hands.findIndex(h => h === player1bestHand.hand) > hands.findIndex(h => h === player2bestHand.hand)) {
-    return 'player 2 wins';
+    return {
+      winner: 'player2',
+      hand: player2bestHand
+    };
   }
   // eslint-disable-next-line consistent-return
   for (let i = 0; i < player1bestHand.cards.length; i += 1) {
     const p1c = player1bestHand.cards[i];
     const p2c = player2bestHand.cards[i];
     if (ranks.findIndex(r => r === p1c[0]) > ranks.findIndex(r => r === p2c[0])) {
-      return 'player 1 wins'
+      return {
+        winner: 'player1',
+        hand: player1bestHand
+      };
     }
     if (ranks.findIndex(r => r === p1c[0]) < ranks.findIndex(r => r === p2c[0])) {
-      return 'player 2 wins'
+      return {
+        winner: 'player2',
+        hand: player2bestHand
+      };
     }
   }
 
-  return 'draw';
+  return {
+    winner: 'draw',
+    hand: player1bestHand
+  };
 }
 // eslint-disable-next-line consistent-return
 function findBestHand(cards) {
