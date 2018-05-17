@@ -171,3 +171,19 @@ test('winningPlayer should find winning player 2', () => {
   expect(winningPlayer(['2d', '7s'], ['Kd', 'As'], ['6h', 'Ah', '5s', '4s', 'Ks']))
     .toEqual('player 2 wins');
 });
+
+
+test('winningPlayer should find winning player 1 with same hand', () => {
+  expect(winningPlayer(['2d', 'Qs'], ['3d', '2h'], ['6h', 'Ah', '5s', '4s', 'Ks']))
+    .toEqual('player 1 wins');
+});
+
+test('winningPlayer should find winning player 2 with same hand', () => {
+  expect(winningPlayer(['2d', '4s'], ['Qd', '2h'], ['6h', 'Ah', '5s', '8s', 'Ks']))
+    .toEqual('player 2 wins');
+});
+
+test('winningPlayer should find draw', () => {
+  expect(winningPlayer(['2d', '4s'], ['Qd', '2h'], ['As', 'Ah', 'Ad', '8s', '8d']))
+    .toEqual('draw');
+});
