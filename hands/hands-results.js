@@ -1,4 +1,4 @@
-const {suits, ranks} = require('../index');
+const {suits, ranks, hands} = require('../index');
 
 module.exports = {
   findFlush,
@@ -10,27 +10,39 @@ module.exports = {
   findStraight,
   findPair,
   findStraightFlush,
-  findBestHand
+  findBestHand,
+  winningPlayer
 };
 
-function findBestHand(cards) { // eslint-disable-line consistent-return
+function winningPlayer(player1Cards, player2cards, tablecards) {
+  const player1bestHand = findBestHand([...player1Cards, ...tablecards]);
+  const player2bestHand = findBestHand([...player2cards, ...tablecards]);
+  if (hands.findIndex(h => h === player1bestHand.hand) < hands.findIndex(h => h === player2bestHand.hand)) {
+    return 'player 1 wins';
+  } else if (hands.findIndex(h => h === player1bestHand.hand) > hands.findIndex(h => h === player2bestHand.hand)) {
+    return 'player 2 wins';
+  }
+  return 'draw';
+}
+// eslint-disable-next-line consistent-return
+function findBestHand(cards) {
   const handFinders = {
     straightFlush: findStraightFlush,
     fourOfAKind: findFourOfAKind,
     fullHouse: findFull,
     flush: findFlush,
     threeOfAKind: findThreeOfAKind,
-    twoPair: findDoublePair,
+    twoPairs: findDoublePair,
     pair: findPair,
     highCard: find5Highest
-  }
+  };
   for (const handName in handFinders) {
     const cardsForHand = handFinders[handName](cards);
     if (cardsForHand) {
       return {
         cards: cardsForHand,
         hand: handName
-      }
+      };
     }
   }
 }
@@ -86,7 +98,10 @@ function findFull(cards) {
   if (!threeOfAkindValue) {
     return null;
   }
-  const pairValue = findSameKind(2, cards.filter(c => c[0] !== threeOfAkindValue));
+  const pairValue = findSameKind(
+    2,
+    cards.filter(c => c[0] !== threeOfAkindValue)
+  );
   if (!pairValue) {
     return null;
   }
@@ -110,7 +125,10 @@ function findDoublePair(cards) {
   return [
     ...cards.filter(c => c[0] === firstPair),
     ...cards.filter(c => c[0] === secondPair),
-    ...findHighest(1, cards.filter(c => c[0] !== firstPair && c[0] !== secondPair))
+    ...findHighest(
+      1,
+      cards.filter(c => c[0] !== firstPair && c[0] !== secondPair)
+    )
   ];
 }
 
@@ -144,9 +162,7 @@ function findSameKind(numberByKind, cards) {
     rankCounts[rank] = rankCounts[rank] ? rankCounts[rank] + 1 : 1;
   }
 
-  const kindValue = Object
-    .entries(rankCounts)
-    .find(r => r[1] === numberByKind);
+  const kindValue = Object.entries(rankCounts).find(r => r[1] === numberByKind);
   if (!kindValue) {
     return null;
   }
@@ -168,11 +184,12 @@ function findOrderedSubset(cards) {
   const straightOrder = ['A', ...ranks].reverse();
 
   const sortedUniqRanks = uniqueElements(
-    cards
-      .sort((a, b) => straightOrder.indexOf(a[0]) - straightOrder.indexOf(b[0]))
+    cards.sort(
+      (a, b) => straightOrder.indexOf(a[0]) - straightOrder.indexOf(b[0])
+    )
   );
   for (let i = 0; i < straightOrder.length - 4; i += 1) {
-    const sequence = findSequence(straightOrder, sortedUniqRanks, i)
+    const sequence = findSequence(straightOrder, sortedUniqRanks, i);
     if (sequence) {
       return sequence;
     }
@@ -181,15 +198,19 @@ function findOrderedSubset(cards) {
 }
 
 function findSequence(straightOrder, sortedUniqCards, i) {
-  return findSequenceBeginning(0, sortedUniqCards, straightOrder, i) ||
+  return (
+    findSequenceBeginning(0, sortedUniqCards, straightOrder, i) ||
     findSequenceBeginning(1, sortedUniqCards, straightOrder, i) ||
     findSequenceBeginning(2, sortedUniqCards, straightOrder, i) ||
-    null;
+    null
+  );
 }
 
 function findSequenceBeginning(beginning, sortedUniqCards, straightOrder, i) {
-  if (straightOrder[i] === sortedUniqCards[beginning][0] &&
-      straightOrder[i + 4] === sortedUniqCards[beginning + 4][0]) {
+  if (
+    straightOrder[i] === sortedUniqCards[beginning][0] &&
+    straightOrder[i + 4] === sortedUniqCards[beginning + 4][0]
+  ) {
     return [...sortedUniqCards.slice(beginning, beginning + 5)];
   }
   return null;

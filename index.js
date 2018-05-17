@@ -1,20 +1,15 @@
-const ranks = [
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  'T',
-  'J',
-  'Q',
-  'K',
-  'A'
-];
-
+const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
 const suits = ['c', 's', 'h', 'd'];
+const hands = [
+  'straightFlush',
+  'fourOfAKind',
+  'fullHouse',
+  'flush',
+  'threeOfAKind',
+  'twoPairs',
+  'pair',
+  'highCard'
+];
 
 function createDeck() {
   return ranks
@@ -23,10 +18,7 @@ function createDeck() {
 }
 
 function pickRandomCard(deck) {
-  const card = deck.splice(
-    Math.floor(Math.random() * deck.length),
-    1
-  )[0];
+  const card = deck.splice(Math.floor(Math.random() * deck.length), 1)[0];
   return {
     deck,
     card
@@ -34,14 +26,8 @@ function pickRandomCard(deck) {
 }
 
 function dealHand(deck) {
-  const card = deck.splice(
-    Math.floor(Math.random() * deck.length),
-    1
-  )[0];
-  const card2 = deck.splice(
-    Math.floor(Math.random() * deck.length),
-    1
-  )[0];
+  const card = deck.splice(Math.floor(Math.random() * deck.length), 1)[0];
+  const card2 = deck.splice(Math.floor(Math.random() * deck.length), 1)[0];
 
   return {
     deck,
@@ -53,12 +39,7 @@ function dealSeven(deck) {
   // simulate hand + 5 on table
   const cards = [];
   for (let i = 0; i < 7; i += 1) {
-    cards.push(
-      deck.splice(
-        Math.floor(Math.random() * deck.length),
-        1
-      )[0]
-    );
+    cards.push(deck.splice(Math.floor(Math.random() * deck.length), 1)[0]);
   }
 
   return {
@@ -73,5 +54,6 @@ module.exports = {
   dealHand,
   dealSeven,
   ranks,
-  suits
+  suits,
+  hands
 };
