@@ -1,4 +1,5 @@
-const {suits, ranks, hands} = require('../index');
+const {suits, ranks, hands, createDeck} = require('../index');
+const Combinatorics = require('js-combinatorics');
 
 module.exports = {
   findFlush,
@@ -242,3 +243,27 @@ function findSequenceBeginning(beginning, sortedUniqCards, straightOrder, i) {
   }
   return null;
 }
+
+
+const myHand = ['2s', '7d'];
+const table = ['Qh', 'Th', '5d'];
+const deck = createDeck()
+  .filter(c => !table.includes(c))
+  .filter(c => !myHand.includes(c));
+
+const cmb = Combinatorics.bigCombination(deck, 2);
+const total = {
+  player1: 0,
+  player2: 0,
+  draw: 0
+};
+while(player2Hand = cmb.next()) {
+    console.log(myHand);
+    console.log(player2Hand);
+    console.log(table);
+    const result = winningPlayer(myHand, player2Hand, table);
+    console.log(result);
+    total[result.winner] += 1;
+}
+
+console.log("total", total);
