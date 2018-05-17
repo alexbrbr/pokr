@@ -187,3 +187,7 @@ test('winningPlayer should find draw', () => {
   expect(winningPlayer(['2d', '4s'], ['Qd', '2h'], ['As', 'Ah', 'Ad', '8s', '8d'])
     .winner).toEqual('draw');
 });
+
+test('winningPlayer should not bug on flush', () => {
+  expect(winningPlayer(['2s', '7d'], ['2h', '4h'], ['Qh', 'Th', '5d', '3h', '9c'])).toEqual('player2');
+});

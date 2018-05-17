@@ -235,6 +235,9 @@ function findSequence(straightOrder, sortedUniqCards, i) {
 }
 
 function findSequenceBeginning(beginning, sortedUniqCards, straightOrder, i) {
+  if (!sortedUniqCards[beginning + 4]) {
+    return null;
+  }
   if (
     straightOrder[i] === sortedUniqCards[beginning][0] &&
     straightOrder[i + 4] === sortedUniqCards[beginning + 4][0]
@@ -245,25 +248,37 @@ function findSequenceBeginning(beginning, sortedUniqCards, straightOrder, i) {
 }
 
 
-const myHand = ['2s', '7d'];
-const table = ['Qh', 'Th', '5d'];
+const myHand = ['Ah', '7s'];
+const table = ['Qh', 'Th', '7d', '3h', '9c'];
 const deck = createDeck()
   .filter(c => !table.includes(c))
   .filter(c => !myHand.includes(c));
 
 const cmb = Combinatorics.bigCombination(deck, 2);
 const total = {
-  player1: 0,
-  player2: 0,
-  draw: 0
+  player1: {
+    number: 0,
+    type: []
+  },
+  player2: {
+    number: 0,
+    type: []
+  },
+  draw: {
+    number: 0,
+    type: []
+  }
 };
 while(player2Hand = cmb.next()) {
-    console.log(myHand);
-    console.log(player2Hand);
-    console.log(table);
-    const result = winningPlayer(myHand, player2Hand, table);
-    console.log(result);
-    total[result.winner] += 1;
+    console.log("myHand",myHand);
+    console.log("player2Hand", player2Hand);
+    console.log("table", table);
+    console.log("winningPlayer(",myHand, player2Hand, table,")");
+    const result =
+     winningPlayer(myHand, player2Hand, table);
+    console.log("result", result);
+    total[result.winner].number += 1;
+    total[result.winner].type.push(result.hand.hand);
 }
 
 console.log("total", total);
