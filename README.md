@@ -15,8 +15,8 @@ const deck = pokr.createDeck();
 const hand = pokr.dealHand(deck);
 const hand2 = pokr.dealHand(deck);
 
-console.log(hand.hand);
-console.log(hand2.hand);
+console.log(hand.hand); // [ 'Jd', 'Th' ]
+console.log(hand2.hand); // [ 'Qd', '5h' ]
 
-console.log(pokr.winningPlayer(hand.hand, hand2.hand, deck.splice(0, 5)));
+console.log(pokr.winningPlayer(hand.hand, hand2.hand, deck.splice(0, 5))); // { winner: 'player2', hand: { cards: [ '2c', '2s', '2h', '2d', 'Qd' ], hand: 'fourOfAKind' } }
 ```
