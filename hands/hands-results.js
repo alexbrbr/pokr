@@ -1,4 +1,15 @@
-const {suits, ranks, hands} = require('../index');
+const ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"];
+const suits = ["c", "s", "h", "d"];
+const hands = [
+  "straightFlush",
+  "fourOfAKind",
+  "fullHouse",
+  "flush",
+  "threeOfAKind",
+  "twoPairs",
+  "pair",
+  "highCard"
+];
 
 module.exports = {
   findFlush,
@@ -11,20 +22,29 @@ module.exports = {
   findPair,
   findStraightFlush,
   findBestHand,
-  winningPlayer
+  winningPlayer,
+  ranks,
+  suits,
+  hands
 };
 
 function winningPlayer(player1Cards, player2cards, tablecards) {
   const player1bestHand = findBestHand([...player1Cards, ...tablecards]);
   const player2bestHand = findBestHand([...player2cards, ...tablecards]);
-  if (hands.findIndex(h => h === player1bestHand.hand) < hands.findIndex(h => h === player2bestHand.hand)) {
+  if (
+    hands.findIndex(h => h === player1bestHand.hand) <
+    hands.findIndex(h => h === player2bestHand.hand)
+  ) {
     return {
-      winner: 'player1',
+      winner: "player1",
       hand: player1bestHand
     };
-  } else if (hands.findIndex(h => h === player1bestHand.hand) > hands.findIndex(h => h === player2bestHand.hand)) {
+  } else if (
+    hands.findIndex(h => h === player1bestHand.hand) >
+    hands.findIndex(h => h === player2bestHand.hand)
+  ) {
     return {
-      winner: 'player2',
+      winner: "player2",
       hand: player2bestHand
     };
   }
@@ -32,22 +52,26 @@ function winningPlayer(player1Cards, player2cards, tablecards) {
   for (let i = 0; i < player1bestHand.cards.length; i += 1) {
     const p1c = player1bestHand.cards[i];
     const p2c = player2bestHand.cards[i];
-    if (ranks.findIndex(r => r === p1c[0]) > ranks.findIndex(r => r === p2c[0])) {
+    if (
+      ranks.findIndex(r => r === p1c[0]) > ranks.findIndex(r => r === p2c[0])
+    ) {
       return {
-        winner: 'player1',
+        winner: "player1",
         hand: player1bestHand
       };
     }
-    if (ranks.findIndex(r => r === p1c[0]) < ranks.findIndex(r => r === p2c[0])) {
+    if (
+      ranks.findIndex(r => r === p1c[0]) < ranks.findIndex(r => r === p2c[0])
+    ) {
       return {
-        winner: 'player2',
+        winner: "player2",
         hand: player2bestHand
       };
     }
   }
 
   return {
-    winner: 'draw',
+    winner: "draw",
     hand: player1bestHand
   };
 }
@@ -208,7 +232,7 @@ function uniqueElements(arr) {
 }
 
 function findOrderedSubset(cards) {
-  const straightOrder = ['A', ...ranks].reverse();
+  const straightOrder = ["A", ...ranks].reverse();
 
   const sortedUniqRanks = uniqueElements(
     cards.sort(

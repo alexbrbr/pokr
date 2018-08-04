@@ -1,17 +1,4 @@
-const {winningPlayer} = require('./hands/hands-results');
-
-const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
-const suits = ['c', 's', 'h', 'd'];
-const hands = [
-  'straightFlush',
-  'fourOfAKind',
-  'fullHouse',
-  'flush',
-  'threeOfAKind',
-  'twoPairs',
-  'pair',
-  'highCard'
-];
+const {winningPlayer, suits, ranks, hands} = require('./hands/hands-results');
 
 function createDeck() {
   return ranks
