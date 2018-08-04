@@ -260,7 +260,7 @@ function findSequence(straightOrder, sortedUniqCards, i) {
 function findSequenceBeginning(beginning, sortedUniqCards, straightOrder, i) {
   if (
     straightOrder[i] === sortedUniqCards[beginning][0] &&
-    straightOrder[i + 4] === sortedUniqCards[beginning + 4][0]
+    sortedUniqCards[beginning + 4] && straightOrder[i + 4] === sortedUniqCards[beginning + 4][0]
   ) {
     return [...sortedUniqCards.slice(beginning, beginning + 5)];
   }
